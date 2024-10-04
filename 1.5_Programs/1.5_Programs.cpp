@@ -1,101 +1,70 @@
-﻿// Write a program that provides the radius, circumference and area of a circle given the
-// coordinates of its center point and a point on its circumference.
-// The following formula gives the distance between two points(x1, y1) and (x2, y2) in the Cartesian
-// plane :
-// sqrt((𝑥2 ― 𝑥1)^2+ (𝑦2 ― 𝑦1)^2)
-// Note that the calculation of the radius of a circle is a specialized version of the distance
-// calculation.For this program write a function called calcDistance with the precondition that it
-// takes as input the coordinates of two points on the cartesian plane and the postcondition that it
-// returns the distance between these two points.
-// The write a function called calcRadius with the precondition that it takes as input the
-// coordinates for the center of a circle and the coordinates of a point on the circumference.The
-// postcondition is that it returns the radius of the circle.
-// Have the specialized calcRadius function call the more general calcDistance function
-// which would return the result of the distance function as the radius of the circle.Notice that the
-// output for the program does not ask for the distance, it only asks for the radius so the
-// calcDistance function is “hidden” from the main function.
-// Include a function calcCircumference which takes as input the radius of the circle and
-// returns the circumference(If r is the radius, the circumference is 2πr).
-// Also include a function calcArea which takes as input the radius of the circle and returns the
-// area(if r is the radius, the area is πr^2).
-// Assume that π = 3.1416.
+﻿// Write a program that outputs the inflation rates for two successive years and whether the inflation trend is increasing or decreasing.
+// Ask the user to input the current price of an item and its price from one year and two years ago. 
+// To calculate the inflation rate for a year, subtract the price of the item for that year from the price of the item one year ago and
+// then divide the result by the price a year ago. Your program must contain the following functions: 
+//    A function which gets the input(returning all three prices).
+//    A function to calculate the results(takes the three prices as input and returns the two inflation rates).
+//    A function to output the results.
+// Use appropriate parameters to pass the information into and out of the three functions.Do not use any global variables.
 
 #include <iostream>
-#include <cmath>
+#include <iomanip>
+
 
 using namespace std;
 
-float calcDistance(int x1, int y1, int x2, int y2);
-float calcRadius();
-float calcCircumference(float radius);
-float calcArea(float radius);
-void print(float radius, float circumference, float area);
+float inputGet(float& price1, float& price2,float& price3);
+float inflateRateGet(float& price1, float& price2,float& price3,float &rate1,float &rate2);
+void print(float& rate1, float& rate2);
 
-float pi = 3.1416;
+
 int main()
 {
-    float radius;
-    float circumference;
-    float area;
+    float price1;
+    float price2;
+    float price3;
+    float rate1;
+    float rate2;
 
-    radius = calcRadius();
-    circumference = calcCircumference(radius);
-    area = calcArea(radius);
-    print(radius, circumference, area);
+    inputGet(price1, price2, price3);
+    inflateRateGet(price1, price2, price3,rate1,rate2);
+    print(rate1, rate2);
 }
 
-float calcDistance(int x1, int y1, int x2, int y2)
+float inputGet(float& price1, float& price2, float& price3)
 {
-    int half1;
-    int half2;
-    float distance;
-    
-    half1 = pow(x2 - x1,2);
-    half2 = pow(y2 - y1, 2);
-    distance = sqrt(half1 + half2);
-    return distance;
+    cout << "how much does the item cost now?" << endl;
+    cin >> price1;
+    cout << "how much did it cost 1 year ago?" << endl;
+    cin >> price2;
+    cout << "how much did it cost 2 years ago?" << endl;
+    cin >> price3;
+
+    return price1;
 }
 
-float calcRadius()
+float inflateRateGet(float& price1, float& price2, float& price3,float &rate1, float &rate2)
 {
-    float radius;
-    int cx1;
-    int cy1;
-    int cx2;
-    int cy2;
-
-    cout << "what is the x coordinate of the center?" << endl;
-    cin >> cx1; 
-    cout << "what is the y coordinate of the center?" << endl;
-    cin >> cy1;
-    cout << "what is the x coordinate of the point on the circumference?" << endl;
-    cin >> cx2; 
-    cout << "what is the y coordinate of the point on the circumference?" << endl;
-    cin >> cy2;
-
-    radius = calcDistance(cx1, cy1, cx2, cy2);
-    return radius;
+    rate1 = (price1 - price2) / price1;
+    rate2 = (price2 - price3) / price2;
+    return rate1;
 }
 
-float calcCircumference (float radius)
+void print(float& rate1, float& rate2)
 {
-    float circumference;
+    cout << setprecision(4) << fixed << "the inflation rate for this year is " << rate1 << "%" << endl;
+    cout << setprecision(4) << fixed << "the inflation rate for last year is " << rate2 << "%" << endl;
 
-    circumference = 2 * pi * radius;
-    return circumference;
-}
-
-float calcArea(float radius)
-{
-    float area;
-
-    area = pi * pow(radius, 2);
-    return area;
-}
-
-void print(float radius, float circumference, float area)
-{
-    cout << "the radius of the circle is " << radius << "." << endl;
-    cout << "the circumference of the circle is " << circumference << "." << endl;
-    cout << "the area of the circle is " << area << "." << endl;
+    if (rate1 > rate2)
+    {
+        cout << "the inflation rate is increasing." << endl;
+    }
+    else if (rate1 < rate2)
+    {
+        cout << "the inflation rate is decreasing." << endl;
+    }
+    else
+    {
+        cout << "the inflation rate is stable" << endl;
+    }
 }
