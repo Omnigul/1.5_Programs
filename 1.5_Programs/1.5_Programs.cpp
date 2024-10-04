@@ -22,25 +22,27 @@
 
 #include <iostream>
 #include <cmath>
+#include <iomanip>
 
 using namespace std;
 
 float calcDistance(int x1, int y1, int x2, int y2);
 float calcRadius();
-float calcCircumference(float radius);
-float calcArea(float radius);
+float calcCircumference(float radius,float pi);
+float calcArea(float radius,float pi);
 void print(float radius, float circumference, float area);
 
-float pi = 3.1416;
+
 int main()
 {
     float radius;
     float circumference;
     float area;
+    float pi = 3.1416;
 
     radius = calcRadius();
-    circumference = calcCircumference(radius);
-    area = calcArea(radius);
+    circumference = calcCircumference(radius,pi);
+    area = calcArea(radius,pi);
     print(radius, circumference, area);
 }
 
@@ -77,7 +79,7 @@ float calcRadius()
     return radius;
 }
 
-float calcCircumference (float radius)
+float calcCircumference (float radius,float pi)
 {
     float circumference;
 
@@ -85,7 +87,7 @@ float calcCircumference (float radius)
     return circumference;
 }
 
-float calcArea(float radius)
+float calcArea(float radius,float pi)
 {
     float area;
 
@@ -95,7 +97,7 @@ float calcArea(float radius)
 
 void print(float radius, float circumference, float area)
 {
-    cout << "the radius of the circle is " << radius << "." << endl;
-    cout << "the circumference of the circle is " << circumference << "." << endl;
-    cout << "the area of the circle is " << area << "." << endl;
+    cout << setprecision(2) << fixed << "the radius of the circle is " << radius << "." << endl;
+    cout << setprecision(2) << fixed << "the circumference of the circle is " << circumference << "." << endl;
+    cout << setprecision(2) << fixed << "the area of the circle is " << area << "." << endl;
 }
